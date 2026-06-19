@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="RouteJudge is an open platform for reproducible and preference-aware LLM routing evaluation."
+    />
+    <title>RouteJudge | Preference-Aware LLM Routing Evaluation</title>
+    <link rel="stylesheet" href="static/css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top">RouteJudge</a>
+      <nav class="top-nav" aria-label="Project navigation">
+        <a href="#abstract">Abstract</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#arena">Demo</a>
+        <a href="#orbit">ORBIT</a>
+        <a href="#citation">Citation</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-inner">
+          <p class="venue">Preference-aware LLM routing evaluation</p>
+          <h1>RouteJudge</h1>
+          <p class="subtitle">An Open Platform for Reproducible and Preference-Aware LLM Routing</p>
+          <p class="hero-description">
+            RouteJudge evaluates LLM routers through anonymous pairwise user preferences,
+            budget-aware model selection, and router-level attribution.
+          </p>
+
+          <div class="button-row" aria-label="Project links">
+            <a class="button primary" href="https://routejudge.cn" target="_blank" rel="noreferrer">Try Platform</a>
+            <a class="button" href="https://github.com/AIGNLAI/LAMDA-ORBIT" target="_blank" rel="noreferrer">View ORBIT</a>
+            <a class="button" href="https://arxiv.org/abs/2606.18774v1" target="_blank" rel="noreferrer">Read Paper</a>
+          </div>
+
+          <div class="pill-row" aria-label="Highlights">
+            <span>Router-Level Evaluation</span>
+            <span>Anonymous Pairwise Preference</span>
+            <span>Budget-Aware Routing</span>
+            <span>ORBIT-Compatible</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="abstract" class="section">
+        <div class="container narrow">
+          <h2>Abstract</h2>
+          <p class="abstract">
+            Existing LLM routing evaluation relies heavily on static benchmarks, golden answers,
+            or automated scores. RouteJudge instead evaluates whether router decisions lead to
+            responses preferred by real users under realistic query distributions, heterogeneous
+            preferences, and deployment constraints. For each query, multiple routing strategies
+            recommend models under the same model pool and budget constraints. The selected model
+            outputs are shown through anonymous pairwise comparison, and user preferences are
+            attributed back to the routers behind the compared responses.
+          </p>
+        </div>
+      </section>
+
+      <section id="workflow" class="section figure-section">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Teaser: RouteJudge Workflow</h2>
+            <p>
+              RouteJudge converts online preference feedback into router-level analytics while
+              preserving a shared model pool, budget constraint, and evaluation record.
+            </p>
+          </div>
+
+          <figure class="workflow-figure">
+            <object class="workflow-pdf" data="static/images/routejudge_workflow.pdf" type="application/pdf">
+              <a href="static/images/routejudge_workflow.pdf">Open the RouteJudge workflow PDF</a>
+            </object>
+            <figcaption>
+              Workflow figure from the repository. If the browser cannot render embedded PDFs,
+              open the <a href="static/images/routejudge_workflow.pdf">workflow PDF</a>.
+            </figcaption>
+          </figure>
+
+          <div class="workflow-summary" aria-label="Condensed RouteJudge workflow">
+            <div class="workflow-node">
+              <span>1</span>
+              <strong>Constrain</strong>
+              <p>User Query + Budget &rarr; Budget-Feasible Model Space.</p>
+            </div>
+            <div class="workflow-node">
+              <span>2</span>
+              <strong>Route</strong>
+              <p>Router Committee &rarr; Duel Pair Selection.</p>
+            </div>
+            <div class="workflow-node">
+              <span>3</span>
+              <strong>Judge</strong>
+              <p>Anonymous Preference Arena collects A/B/Tie/Both Bad labels.</p>
+            </div>
+            <div class="workflow-node">
+              <span>4</span>
+              <strong>Analyze</strong>
+              <p>Router-Level Attribution &rarr; Evaluation Analytics.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="arena" class="section">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Anonymous Preference Arena</h2>
+            <p>
+              The user sees only anonymous responses during judgment. Model identities, router
+              votes, costs, and latencies are hidden during user judgment.
+            </p>
+          </div>
+
+          <!-- TODO: Replace this mockup with a real platform screenshot after public UI assets are finalized. -->
+          <div class="demo-grid">
+            <figure class="mockup-card">
+              <div class="mockup-header">
+                <span>Illustrative interface mockup</span>
+                <strong>Preference judgment</strong>
+              </div>
+              <div class="response-grid">
+                <article class="response-card">
+                  <span>Response A</span>
+                  <p>
+                    A concise answer that states assumptions, compares the alternatives, and
+                    provides a direct recommendation for the user query.
+                  </p>
+                </article>
+                <article class="response-card">
+                  <span>Response B</span>
+                  <p>
+                    A broader answer that gives additional caveats, examples, and more detailed
+                    reasoning about cost and latency trade-offs.
+                  </p>
+                </article>
+              </div>
+              <div class="judgment-row" aria-label="Judgment buttons">
+                <button>A Better</button>
+                <button>B Better</button>
+                <button>Tie</button>
+                <button>Both Bad</button>
+              </div>
+              <figcaption>
+                Model identities, router votes, costs, and latencies are hidden during user judgment.
+              </figcaption>
+            </figure>
+
+            <figure class="mockup-card">
+              <div class="mockup-header">
+                <span>Illustrative interface mockup</span>
+                <strong>Router-level attribution</strong>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Router</th>
+                      <th>Selected Model</th>
+                      <th>Participated</th>
+                      <th>Outcome</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>EmbedLLM</td>
+                      <td><span class="math-model"><i>m</i><sub>A</sub></span></td>
+                      <td>Yes</td>
+                      <td><span class="tag win">Win</span></td>
+                    </tr>
+                    <tr>
+                      <td>EquiRouter</td>
+                      <td><span class="math-model"><i>m</i><sub>B</sub></span></td>
+                      <td>Yes</td>
+                      <td><span class="tag loss">Loss</span></td>
+                    </tr>
+                    <tr>
+                      <td>Avengers-Pro</td>
+                      <td><span class="math-model"><i>m</i><sub>K</sub></span></td>
+                      <td>No</td>
+                      <td><span class="tag neutral">NonPart</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <figcaption>
+                Example rows are generic and do not represent measured leaderboard results.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section soft-bg">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Key Features</h2>
+            <p>RouteJudge is designed for preference-aware, cost-aware, and task-conditioned analysis of LLM routers.</p>
+          </div>
+          <div class="card-grid features">
+            <article><span class="icon">A</span><h3>Anonymous pairwise preference arena</h3><p>Collects user preferences without exposing model or router identity.</p></article>
+            <article><span class="icon">R</span><h3>Router-level preference attribution</h3><p>Attributes user judgments to routers behind compared responses.</p></article>
+            <article><span class="icon">B</span><h3>Budget-feasible model filtering</h3><p>Constrains all routers to the same feasible model pool.</p></article>
+            <article><span class="icon">C</span><h3>Cost and latency tracking</h3><p>Records deployment-relevant signals alongside preference labels.</p></article>
+            <article><span class="icon">E</span><h3>Preference score / win rate / Elo rating</h3><p>Provides complementary views of preference-based router quality.</p></article>
+            <article><span class="icon">P</span><h3>Cost-quality Pareto analysis</h3><p>Studies the trade-off between preference outcomes and inference cost.</p></article>
+            <article><span class="icon">T</span><h3>Task-conditioned diagnostics</h3><p>Breaks down router behavior by task type and metadata.</p></article>
+            <article><span class="icon">N</span><h3>Participation-rate analysis</h3><p>Interprets preference scores together with duel exposure.</p></article>
+            <article><span class="icon">O</span><h3>ORBIT-based router submission and integration</h3><p>Connects standardized router development to online RouteJudge evaluation.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="orbit" class="section orbit-band">
+        <div class="container narrow">
+          <h2>RouteJudge &times; ORBIT</h2>
+          <p>
+            ORBIT is the standardized development and integration layer for RouteJudge.
+            Researchers implement routers in ORBIT, evaluate them offline under unified protocols,
+            and submit compatible routers for RouteJudge historical replay and online
+            preference-based evaluation.
+          </p>
+        </div>
+        <div class="container">
+          <div class="pipeline" aria-label="ORBIT integration pipeline">
+            <article><span>01</span><strong>Implement Router in ORBIT</strong><p>Follow the unified router interface.</p></article>
+            <article><span>02</span><strong>Offline Evaluation</strong><p>Run under shared protocols before submission.</p></article>
+            <article><span>03</span><strong>PR Submission</strong><p>Package configs, dependencies, seeds, and entry points.</p></article>
+            <article><span>04</span><strong>Historical Replay</strong><p>Evaluate decisions on recorded RouteJudge data.</p></article>
+            <article><span>05</span><strong>Online RouteJudge Evaluation</strong><p>Collect preference feedback from live comparisons.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section soft-bg">
+        <div class="container">
+          <div class="section-heading">
+            <h2>For Researchers</h2>
+            <p>A concise integration path for new routing methods.</p>
+          </div>
+          <ol class="steps">
+            <li>Implement a router following the ORBIT router interface.</li>
+            <li>Expose a unified prediction function that takes query representation and the feasible model set as input.</li>
+            <li>Add configs, dependencies, seeds, checkpoints, and preprocessing instructions.</li>
+            <li>Run offline evaluation under ORBIT.</li>
+            <li>Submit a pull request.</li>
+            <li>After integration, the router can be evaluated through RouteJudge.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Evaluation Metrics</h2>
+            <p>RouteJudge reports router behavior without fabricating fixed universal rankings.</p>
+          </div>
+          <div class="card-grid metrics">
+            <article><h3>Preference Score</h3><p>Aggregates preference labels attributed to each router.</p></article>
+            <article><h3>Win Rate</h3><p>Measures how often a router-selected response wins pairwise judgments.</p></article>
+            <article><h3>Elo Rating</h3><p>Maintains relative ratings from pairwise outcomes.</p></article>
+            <article><h3>Cost-Quality Pareto</h3><p>Compares preference quality against inference cost.</p></article>
+            <article><h3>Task-Conditioned Performance</h3><p>Analyzes behavior across task categories.</p></article>
+            <article><h3>Pairwise Router Comparison</h3><p>Directly compares routers when their selected models meet.</p></article>
+            <article><h3>Participation Rate</h3><p>Tracks how often each router enters evaluated duels.</p></article>
+            <article><h3>Routing Behavior Diagnostics</h3><p>Inspects model selection, budget use, latency, cost, and metadata.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="citation" class="section">
+        <div class="container narrow">
+          <div class="authors-near-citation" aria-label="Authors and affiliations">
+            <h2>Authors</h2>
+            <p class="author-names">Guannan Lai<sup>1,2,3</sup>, Haoran Hu<sup>1,2</sup>, Han-Jia Ye<sup>1,2</sup></p>
+            <p><sup>1</sup> School of Artificial Intelligence, Nanjing University</p>
+            <p><sup>2</sup> National Key Laboratory for Novel Software Technology, Nanjing University</p>
+            <p><sup>3</sup> SinapisAI</p>
+          </div>
+          <h2>Citation</h2>
+          <pre><code>@misc{lai2026routejudge_arxiv,
+  title         = {RouteJudge: An Open Platform for Reproducible and Preference-Aware LLM Routing},
+  author        = {Lai, Guannan and Hu, Haoran and Ye, Han-Jia},
+  year          = {2026},
+  eprint        = {2606.18774},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2606.18774v1}
+}
+
+@inproceedings{lai2026routejudge,
+  title     = {RouteJudge: Preference-Based Evaluation of {LLM} Routers under Pluralistic User Preferences},
+  author    = {Guannan Lai and Haoran Hu and Han-Jia Ye},
+  booktitle = {Pluralistic Alignment Workshop at ICML 2026},
+  year      = {2026}
+}</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>RouteJudge</span>
+        <nav aria-label="Footer links">
+          <a href="https://routejudge.cn" target="_blank" rel="noreferrer">Platform</a>
+          <a href="https://github.com/AIGNLAI/LAMDA-ORBIT" target="_blank" rel="noreferrer">ORBIT</a>
+          <a href="https://arxiv.org/abs/2606.18774v1" target="_blank" rel="noreferrer">Paper</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
